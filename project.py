@@ -243,6 +243,10 @@ def editRestaurant(restaurant_id):
         return redirect('/login')
     editedRestaurant = session.query(
         Restaurant).filter_by(id=restaurant_id).one()
+
+    if login_session['user_id'] != editedRestaurant.user_id:
+        return render_template('prohibit.html')
+
     if request.method == 'POST':
         if request.form['name']:
             editedRestaurant.name = request.form['name']
@@ -259,6 +263,10 @@ def deleteRestaurant(restaurant_id):
         return redirect('/login')
     restaurantToDelete = session.query(
         Restaurant).filter_by(id=restaurant_id).one()
+
+    if login_session['user_id'] != restaurantToDelete.user_id:
+        return render_template('prohibit.html')
+
     if request.method == 'POST':
         session.delete(restaurantToDelete)
         flash('%s Successfully Deleted' % restaurantToDelete.name)
@@ -287,6 +295,8 @@ def newMenuItem(restaurant_id):
     if 'username' not in login_session:
         return redirect('/login')
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    if login_session['user_id'] != restaurant.user_id:
+        return render_template('prohibit.html')
     if request.method == 'POST':
         newItem = MenuItem(name=request.form['name'], description=request.form['description'], price=request.form[
                            'price'], course=request.form['course'], restaurant_id=restaurant_id, user_id=restaurant.user_id)
@@ -305,6 +315,9 @@ def editMenuItem(restaurant_id, menu_id):
         return redirect('/login')
     editedItem = session.query(MenuItem).filter_by(id=menu_id).one()
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    if login_session['user_id'] != restaurant.user_id:
+        return render_template('prohibit.html')
+
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
@@ -328,7 +341,10 @@ def deleteMenuItem(restaurant_id, menu_id):
     if 'username' not in login_session:
         return redirect('/login')
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    if login_session['user_id'] != restaurant.user_id:
+        return render_template('prohibit.html')
     itemToDelete = session.query(MenuItem).filter_by(id=menu_id).one()
+
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
