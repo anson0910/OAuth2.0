@@ -19,7 +19,7 @@
         <div id="signInButton">
           <span class="g-signin"
             data-scope="openid email"
-            data-clientid="14288581865-.apps.googleusercontent.com"
+            data-clientid="14288581865-lfgm935qa8kt78cq7c3o2i8iel68cjiq.apps.googleusercontent.com"
             data-redirecturi="postmessage"
             data-accesstype="offline"
             data-cookiepolicy="single_host_origin"
@@ -70,11 +70,11 @@
         <script>
           window.fbAsyncInit = function() {
           FB.init({
-            appId      : 'XXXX',
+            appId      : '704742426357393',
             cookie     : true,  // enable cookies to allow the server to access
                                 // the session
             xfbml      : true,  // parse social plugins on this page
-            version    : 'v2.2' // use version 2.2
+            version    : 'v2.4' // use version 2.2
           });
           };
           // Load the SDK asynchronously
@@ -88,6 +88,7 @@
           // Here we run a very simple test of the Graph API after login is
           // successful.  See statusChangeCallback() for when this call is made.
           function sendTokenToServer() {
+            console.log('here');
             var access_token = FB.getAuthResponse()['accessToken'];
             console.log(access_token)
             console.log('Welcome!  Fetching your information.... ');
@@ -107,12 +108,12 @@
                   window.location.href = "/restaurant";
                  }, 4000);
 
-              } else {
+                } else {
                 $('#result').html('Failed to make a server-side call. Check your configuration and console.');
-                 }
+                }
               }
 
-          });
+              });
             });
           }
         </script>
